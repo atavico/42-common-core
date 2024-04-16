@@ -1,0 +1,80 @@
+.victory {
+  color: rgb(149, 255, 183);
+}
+
+.defeat {
+  color: #fd8f8f;
+}
+
+.game-list {
+  border: 1px solid #000;
+  background-color: black;
+  height: 128px;
+  overflow-y: auto;
+  list-style-type: none;
+}
+
+.status-dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.imgPara {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  align-items: center;
+}
+
+.paraImg {
+  margin: 0;
+  text-align: center;
+}
+
+.col6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+button:disabled {
+  background-color: var(--aleBlue);
+  /* cursor: not-allowed; */
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+}
+
+.toggle-button {
+  margin-left: 10px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.game-item {
+  margin-bottom: 6px;
+}

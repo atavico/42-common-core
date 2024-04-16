@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col6">
+    <h1>{{ finalsStr }}</h1>
+  </div>
+  <ng-container *ngFor="let user of usersFinal; let i = index">
+    <div class="col4" *ngIf="i % 2 === 0">
+      <div
+        class="card"
+        [ngStyle]="{
+          'box-shadow': shadowCard(usersFinal[i].nick, 'finals')
+            ? '0px 0px 5px 5px green'
+            : 'none'
+        }"
+      >
+        <h2>{{ firstSecondPlaceStr }}</h2>
+        <div class="row">
+          <div class="col6FastCollapse" *ngIf="usersFinal[i].nick != ''">
+            <div
+              class="picMedium"
+              [ngStyle]="{
+                'background-image': 'url(' + usersFinal[i].avatar + ')'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersFinal[i].nick }}</strong>
+            </h5>
+            <button
+              *ngIf="myTurn(usersFinal[i].nick, 'finals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay1, danger: !readyToPlay1 }"
+              (click)="nextMatchReady(1)"
+              [innerHTML]="readyToPlay1 ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <button disabled>{{ notMyTurn }}</button>
+            </ng-template>
+          </div>
+          <div class="col6FastCollapse" *ngIf="usersFinal[i + 1].nick != ''">
+            <div
+              class="picMedium"
+              [ngStyle]="{
+                'background-image': 'url(' + usersFinal[i + 1].avatar + ')'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersFinal[i + 1].nick }}</strong>
+            </h5>
+            <button
+              *ngIf="myTurn(usersFinal[i + 1].nick, 'finals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay2, danger: !readyToPlay2 }"
+              (click)="nextMatchReady(2)"
+              [innerHTML]="readyToPlay2 ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <button disabled>{{ notMyTurn }}</button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="divider"></div>
+<div class="row">
+  <div class="col4">
+    <h1>{{ semiFinalsStr }}</h1>
+  </div>
+  <ng-container *ngFor="let user of usersSemi; let i = index">
+    <div class="col4" *ngIf="i % 2 === 0">
+      <div
+        class="card"
+        [ngStyle]="{
+          'box-shadow': shadowCard(usersSemi[i].nick, 'semifinals')
+            ? '0px 0px 5px 5px green'
+            : 'none'
+        }"
+      >
+        <div class="row">
+          <div class="col6FastCollapse" *ngIf="usersSemi[i].nick != ''">
+            <div
+              class="picSmall"
+              [ngStyle]="{
+                'background-image': 'url(' + usersSemi[i].avatar + ')',
+                filter:
+                  turn != 'semifinals' && turn != 'quarters'
+                    ? 'grayscale(90%)'
+                    : 'none'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersSemi[i].nick }}</strong>
+            </h5>
+            <button
+              *ngIf="myTurn(usersSemi[i].nick, 'semifinals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay1, danger: !readyToPlay1 }"
+              (click)="nextMatchReady(1)"
+              [innerHTML]="readyToPlay1 ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <button disabled>{{ notMyTurn }}</button>
+            </ng-template>
+          </div>
+          <div class="col6FastCollapse" *ngIf="usersSemi[i + 1].nick != ''">
+            <div
+              class="picSmall"
+              [ngStyle]="{
+                'background-image': 'url(' + usersSemi[i + 1].avatar + ')',
+                filter:
+                  turn != 'semifinals' && turn != 'quarters'
+                    ? 'grayscale(90%)'
+                    : 'none'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersSemi[i + 1].nick }}</strong>
+            </h5>
+            <button
+              *ngIf="
+                myTurn(usersSemi[i + 1].nick, 'semifinals');
+                else notMyTurnIF
+              "
+              [ngClass]="{ success: readyToPlay2, danger: !readyToPlay2 }"
+              (click)="nextMatchReady(2)"
+              [innerHTML]="readyToPlay2 ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <button disabled>{{ notMyTurn }}</button>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

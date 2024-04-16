@@ -1,0 +1,99 @@
+<app-panel-side></app-panel-side>
+<div class="mainMenuFullHeight">
+  <div class="gameDashboard">
+    <div class="row" style="display: flex; justify-content: flex-end">
+      <div class="col4" style="float: right">
+        <button class="gray" (click)="refresh()">
+          <img src="../../../assets/icons/refresh.png" alt="">
+          {{ refreshStr }}</button>
+      </div>
+    </div>
+    <div class="row">
+      <!--1 vs 1 lobby-->
+      <div class="col6">
+        <app-match-header
+          [matchType]="'1 v 1'"
+          [switchWatchMatch]="showWatchMatch"
+          (boolWatchMatch)="changePlayWatch()"
+        ></app-match-header>
+        <div *ngIf="!showWatchMatch">
+          <div class="blackCard">
+            <div class="matchsGrid">
+              <p>{{ creator }}</p>
+              <p>{{ score }}</p>
+              <p></p>
+            </div>
+            <app-matches
+              *ngFor="let match1v1 of oneVoneMatches"
+              [match]="match1v1"
+              [JoinWatch]="join"
+              (joinMatch)="joinToMatch($event)"
+            ></app-matches>
+          </div>
+        </div>
+      </div>
+      <!--Tournament lobby-->
+      <div class="col6">
+        <app-match-header
+          [matchType]="tournament"
+          [switchWatchMatch]="showWatchMatch"
+          (boolWatchMatch)="changePlayWatch()"
+        ></app-match-header>
+        <div *ngIf="!showWatchMatch">
+          <div class="blackCard">
+            <div class="matchsGrid">
+              <p>{{ creator }}</p>
+              <p>{{ score }}</p>
+              <p>{{ slots }}</p>
+            </div>
+            <app-matches
+              *ngFor="let matchT of tournamentMatches"
+              [match]="matchT"
+              [JoinWatch]="join"
+              (joinMatch)="joinToMatch($event)"
+              [playerNbr]="getHowManyPlayers(matchT.players_id)"
+            ></app-matches>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Watch current match-->
+    <div class="row" style="margin-top: auto">
+      <div class="col12">
+        <app-match-header
+          [matchType]="watchMatchStr"
+          [switchWatchMatch]="!showWatchMatch"
+          (boolWatchMatch)="changePlayWatch()"
+        ></app-match-header>
+        <div *ngIf="showWatchMatch">
+          <div class="blackCard">
+            <div class="matchsGrid">
+              <p>{{ creator }}</p>
+              <p>{{ score }}</p>
+              <p></p>
+            </div>
+            <app-matches
+              *ngFor="let matchW of watchMatches"
+              [match]="matchW"
+              [JoinWatch]="watch"
+              (joinMatch)="watchMatch($event)"
+            ></app-matches>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Back and host match buttons-->
+    <div class="row" style="display: flex; justify-content: space-between">
+      <div class="col4">
+        <button class="gray" (click)="backCall()">
+          <img src="../../../assets/icons/back-arrow.png" alt="">
+          {{ back }}</button>
+      </div>
+      <div class="col4">
+        <button class="gray" (click)="hostMatch()">
+          <img src="../../../assets/icons/game.png" alt="">
+          {{ hostMatchStr }}</button>
+      </div>
+    </div>
+  </div>
+</div>

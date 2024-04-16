@@ -1,0 +1,30 @@
+<app-panel-side></app-panel-side>
+<div class="mainMenuFullHeight">
+  <div class="gameDashboard" style="background-color: #121212; padding: 20px">
+    <h1>{{ organizingStr }}</h1>
+    <h3>{{ waitingStr }}</h3>
+    <p>{{ currentPartecipants }} / {{ max_partecipants }}</p>
+    <div class="row">
+      <div class="col4" *ngFor="let partecipant of partecipants | async">
+        <div class="card">
+          <div
+            class="picMedium"
+            [ngStyle]="{
+              'background-image': 'url(' + partecipant.avatar + ')'
+            }"
+          ></div>
+          <h5 style="height: 2.4em">
+            <strong>{{ partecipant.nick }}</strong> #{{ partecipant.id }}
+          </h5>
+          <button
+            [ngStyle]="{
+              'background-color': partecipant.ready ? 'green' : 'red'
+            }"
+            (click)="onReadyClick(partecipant)"
+            [innerHTML]="partecipant.ready ? 'Ready' : 'Unready'"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

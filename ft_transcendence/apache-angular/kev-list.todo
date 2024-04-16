@@ -1,0 +1,79 @@
+Generic:
+  ✔ aggiungere suoni @done (2/26/2024, 1:02:23 PM)
+  ✔ leggere json lingue 1 volta sola @done (2/27/2024, 2:03:02 PM)
+  ✔ testare con piu persone contemporaneamente @done (2/27/2024, 9:11:18 PM)
+  ✔ studiare come aggiungere immagini @done (2/29/2024, 3:57:28 PM)
+  ✔ websocket viene creato nel costruttore e non aggiornato piu @done (3/7/2024, 12:20:14 PM)
+  ✔ musica di sottofondo @done (3/10/2024, 6:52:00 PM)
+  ✔ storare le musiche in backend? @done (3/11/2024, 9:29:44 AM)
+  ✔ password non si vede con * @done (3/11/2024, 5:53:27 PM)
+  ✔ forse tocca fare in ogni chiamata websocket user if 'join_leave' @done (3/8/2024, 3:36:17 PM) senza forse
+  ✔ si puo entrare piu volte con lo stesso account @done (3/13/2024, 5:55:54 PM)
+  ✔ socket player delete. {"action": "player_deleted", "id": player_deleted_id<int>} @done (3/14/2024, 1:30:15 PM)
+
+Friend:
+  ✔ in add friend mostrare i primi 5 e aggiungere slide @done (2/27/2024, 2:49:31 PM)
+  ✔ inserire 'empty' ad amici e pending se vuoti un grigio @done (2/26/2024, 1:16:12 PM)
+  ✔ aggiungi amici key sensitive maiuscole e minuscole @done (2/26/2024, 1:30:57 PM)
+  ✔ aggiungere amici quando accettiamo richiesta @done (2/27/2024, 4:10:01 PM)
+  ✔ quando passiamo con mouse su friend e friend request modificare mouse e scritta @done (2/27/2024, 2:57:41 PM)
+  ✔ quando apriamo tendina friend request fare chiamata pending a tempo @done (2/27/2024, 3:10:30 PM)
+  ✔ chiamata back-end lista amici, aggiornare side-panel @done (2/27/2024, 7:10:19 PM)
+  ✔ mettere pallino online/offline amici @done (2/27/2024, 9:11:14 PM)
+  ✔ filtrare amici prima online e poi offline @done (2/27/2024, 9:20:16 PM)
+  ✔ quando entra con token amici non funzionano @done (2/27/2024, 7:10:15 PM)
+  ✔ filtrare amici per nome e id @done (3/7/2024, 12:20:03 PM)
+  ✔ capire come prendere segnale websocket per aggiornare amici @done (3/7/2024, 4:17:15 PM)
+  ✔ aggiornare nome quando segnale websocket @done (3/8/2024, 3:36:28 PM)
+  ✔ mettere un max di amici e friend request con uno scroll @done (3/8/2024, 4:18:29 PM)
+  ✔ socket delete friend notify. {"action": "friend_deleted", "player_id": removed_id:int} @done (3/14/2024, 1:30:32 PM)
+
+Image:
+  ✔ aggiungere immagini @done (2/29/2024, 3:57:28 PM)
+  ✔ controllare perche non legge bene le immagini @done (3/6/2024, 4:35:44 PM)
+  ✔ prendere immagini dalla 42 @done (3/10/2024, 3:22:59 PM)
+  ✔ sfondo blu dietro immagini @done (3/7/2024, 12:20:09 PM)
+
+Lobby:
+  ✔ pulsante 'watch game' chiude 1v1 e tournament e mostra i game stampare i game se status diverso da 'pending' @done (3/13/2024, 12:23:15 PM)
+
+  ✔ spostare pulsati sotto @done (3/8/2024, 11:33:30 AM)
+  ✔ pulsante join diventa input se password (6 caratteri max) @done (3/8/2024, 11:33:30 AM)
+  ✔ stampare i match @done (3/13/2024, 12:23:14 PM)
+    ✔ 1v1: player id, friend only?, score to win @done (3/13/2024, 12:23:13 PM)
+    ✔ tournament: player id, friend only?, score to win, number of partecipants @done (3/13/2024, 12:23:12 PM)
+      ✔ quante persone sono gia in queue (3/4) @done (3/13/2024, 12:23:09 PM)
+  ☐ controlli in refresh, partite watch
+  ✔ mandare password al backend e controllare se corretta : TOLTO @done (3/25/2024, 3:08:21 AM)
+  ✔ modificare in host match da public, private a with/without friend @done (3/25/2024, 3:08:32 AM)
+
+robaVaria:
+  ✔ sidebar anche dopo tasto play @done (3/19/2024, 11:17:43 PM)
+  ✔ hostMatch dopo aver selezionato privata o pubblica @done (3/19/2024, 11:17:42 PM)
+  ☐ quando si refresha la pagina mandare in login
+  ✔ quando si e' gia loggati mandare in una nuova pagina con scritto 'Sei gia loggato' @done (3/14/2024, 1:28:39 PM)
+  ✔ gia loggati e si rilogga, ti slogga @done (3/14/2024, 1:28:35 PM)
+  ✔ refresh quando una nuova persona entra, si registra o esce, solo se amici @done (3/18/2024, 1:06:15 PM)
+
+
+vinz:
+  ✔ non mi arriva nel socket la notifica di amicizia accettata @done (3/18/2024, 12:12:31 PM)
+  ✔ non mi arriva nel socket la notifica di amicizia declinata @done (3/18/2024, 12:12:31 PM)
+  ✔ token quando si accede controllare se valido @done (3/25/2024, 3:09:06 AM)
+  ✔ quando si cancella account arriva sia player_deleted che join_leave @done (3/18/2024, 12:12:31 PM)
+
+  ✔ funzione per chiamate back https://localhost:8000 e wss://localhost:8001 @done (3/18/2024, 11:53:38 AM)
+
+
+  ✔ immagine owl, ant, bee, ... @done (3/10/2024, 3:22:59 PM)
+
+  ✔ quando se entra prima volta in main menu immagine non carica @done (3/22/2024, 5:43:50 PM)
+
+  ✔ nel profilo 4 campi: Tornei svolti, Quante volte sono arrivato Primo, Secondo e Terzo @done (3/24/2024, 1:49:59 PM)
+  ✔ non mi arrivano da back le info aggiornate di vittorie e sconfitte @done (3/24/2024, 6:02:07 PM)
+  ✔ se uno crea una partita ed esce, la partita rimane in pending @done (3/24/2024, 6:02:10 PM)
+
+  ✔ come mostrare in profile:  data | win/lost | persona contro cui sono stato | punteggio | torneo o 1v1 @done (3/25/2024, 3:08:05 AM)
+  ✔ torneo: data | nostro piazzamento | se non noi primi (1' nome vincitore) | quanti giocatori @done (3/25/2024, 3:08:06 AM)
+
+  style="filter: grayscale();"

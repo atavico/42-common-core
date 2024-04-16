@@ -1,0 +1,100 @@
+#!/bin/sh
+
+# Start vault server and place in background
+vault server -config=vault.hcl -tls-skip-verify &
+
+sleep 2
+init_output=$(vault operator init)
+
+unseal_keys=$(echo "$init_output" | awk '/Unseal Key/ {print $4}')
+
+root_token=$(echo "$init_output" | awk '/Initial Root Token/ {print $4}')
+
+echo "$unseal_keys" > shared-volume/unseal_keys.txt
+echo "$root_token" > shared-volume/root_token.txt
+
+unseal=$(echo "$unseal_keys" | head -n 3)
+echo "unseal: $unseal"
+
+for key in $unseal; do
+	vault operator unseal "$key"
+done
+
+echo "Vault unsealed!"
+
+export VAULT_TOKEN=$root_token
+
+echo "Enabling database plugin"
+vault secrets enable -path=dbs database
+
+echo "Adding postgres connection information"
+vault write dbs/config/mydb \
+  plugin_name=postgresql-database-plugin \
+  connection_url='postgresql://{{username}}:{{password}}@db:5432/'${POSTGRES_DB}'' \
+  allowed_roles=mydb-admin \
+  username=${POSTGRES_USER} \
+  password=${POSTGRES_PASSWORD} \
+  verify_connection=false
+
+echo "Adding admin role"
+vault write dbs/roles/mydb-admin \
+  db_name=mydb \
+  default_ttl=24h \
+  max_ttl=24h \
+  creation_statements="CREATE USER \"{{name}}\" WITH SUPERUSER ENCRYPTED PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
+  revocation_statements="REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM \"{{name}}\"; DROP OWNED BY \"{{name}}\"; DROP ROLE \"{{name}}\";"
+
+vault auth enable approle
+
+cat policy.hcl | vault policy write data-policy -
+
+vault write auth/approle/role/dataapp policies=data-policy
+
+role_id=$(vault read auth/approle/role/dataapp/role-id | grep "role_id" | awk '{print $NF}')
+
+echo "Role ID: $role_id"
+
+secret_id=$(vault write -force auth/approle/role/dataapp/secret-id | grep "secret_id" | awk '$1 == "secret_id" {print $NF}')
+
+vault secrets enable -path=secret kv
+vault kv put secret/django/oauth_api client_id=$OAUTH_CLIENT_ID client_secret=$OAUTH_CLIENT_SECRET
+vault kv get secret/django/oauth_api
+
+vault kv put secret/django/blockchain_api bc_url=$BLOCKCHAIN_URL bc_wallet=$WALLET bc_key=$PRIVATEKEY bc_smart=$SMARTCONTRACT
+vault kv put secret/django/djkey_api djkey=$DJANGO_KEY
+
+# vault kv get secret/django/blockchain_api
+
+#elk admin token
+cat elk-admin-token.hcl | vault policy write elk-admin-policy -
+elk_admin_token=$(vault token create -policy=elk-admin-policy | awk '$1 == "token" {print $2}')
+echo "$elk_admin_token" > /shared-volume/elk_admin_token.txt
+echo "$elk_admin_token" > /elastic-shared/elk_admin_token.txt
+
+vault kv put secret/elk/elastic_token elastic=${ELASTIC_PASSWORD}
+vault kv put secret/elk/logstash_system_token logstash_system=${LOGSTASH_PASSWORD}
+
+#token with use limit for elk
+cat elk-credentials-token.hcl | vault policy write elk-token-policy -
+elk_token=$(vault token create -ttl=10m -use-limit=12 -policy=elk-token-policy | awk '$1 == "token" {print $2}')
+
+echo "$elk_token" > elastic-shared/elk_token.txt
+
+
+#token with use limit for django approle
+cat policy-credentials-token.hcl | vault policy write credentials-token-policy -
+credentials_token=$(vault token create -ttl=10m -use-limit=4 -policy=credentials-token-policy | awk '$1 == "token" {print $2}')
+
+echo "$credentials_token" > shared-volume/credentials_token.txt
+
+export VAULT_TOKEN=$elk_token
+vault write cubbyhole/kibana_encryptionkey enkey=${KIBANA_ENCRYPTIONKEY}
+vault write cubbyhole/elastic_token elastic=${ELASTIC_PASSWORD}
+vault write cubbyhole/logstash_system_token logstash_system=${LOGSTASH_PASSWORD}
+
+export VAULT_TOKEN=$credentials_token
+vault write cubbyhole/approle_role value=$role_id
+vault write cubbyhole/approle_secret value=$secret_id
+
+# Wait for vault server to finish
+wait

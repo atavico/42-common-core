@@ -1,0 +1,60 @@
+db:5432 - accepting connections
+HTTP/2 307 
+cache-control: no-store
+content-type: text/html; charset=utf-8
+location: /ui/
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 40
+date: Tue, 26 Mar 2024 16:54:02 GMT
+
+<a href="/ui/">Temporary Redirect</a>.
+
+{'password': '-0hUyjiLnYC7fpOHnSiu', 'username': 'v-approle-mydb-adm-8BK4DuXommUF3enqbeTE-1711472043'}
+No changes detected
+{'password': 's70wNFfxO-i35PToUjz4', 'username': 'v-approle-mydb-adm-VfhaaYGvKG8lCUxs0Fdt-1711472048'}
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, djangoapp, sessions, tournaments, users
+Running migrations:
+  No migrations to apply.
+{'password': 'bIuxW-c0fIXL0SdpUSQI', 'username': 'v-approle-mydb-adm-WCYPvizYqJd6OXmioC1H-1711472053'}
+{'password': 'cx4K-TIW8YzEEnt0j3nS', 'username': 'v-approle-mydb-adm-IpazF2sbrdvqiCBlULVh-1711472054'}
+{'password': 'QaIF-oRDhXYrtI61GLcN', 'username': 'v-approle-mydb-adm-IEODaQp433gzC7T3qwhi-1711472055'}
+Validating models...
+
+System check identified no issues (0 silenced).
+March 26, 2024 - 16:54:20
+Django version 4.2.7, using settings 'backdj.settings'
+Starting development server at https://0.0.0.0:8000/
+Using SSL certificate: tls-certificates/cert.pem
+Using SSL key: tls-certificates/key.pem
+Quit the server with CONTROL-C.
+db:5432 - accepting connections
+HTTP/2 307 
+cache-control: no-store
+content-type: text/html; charset=utf-8
+location: /ui/
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 40
+date: Tue, 26 Mar 2024 16:58:16 GMT
+
+<a href="/ui/">Temporary Redirect</a>.
+
+{'password': '3oknKAeuOLQJPHwsb2-I', 'username': 'v-approle-mydb-adm-kAk0wPkI49dBrzUaV2mg-1711472297'}
+No changes detected
+{'password': 'j3I2NrmcJG-ooPoA7qck', 'username': 'v-approle-mydb-adm-bL6z2M5hCCHMQMQegbAT-1711472301'}
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, djangoapp, sessions, tournaments, users
+Running migrations:
+  No migrations to apply.
+{'password': 'yXZ1tJaTy3cPRBn-6V3L', 'username': 'v-approle-mydb-adm-XxGmuFhvFnbGu5CF38UM-1711472305'}
+{'password': 'fxO58ckgg4hE19o-rdj3', 'username': 'v-approle-mydb-adm-8ZHz5BO1x5rfZxM5zjqz-1711472305'}
+{'password': '6LgPrEB5nXSyD-1JvPDI', 'username': 'v-approle-mydb-adm-xQaz1ZEhhPSlesiBul7L-1711472306'}
+Validating models...
+
+System check identified no issues (0 silenced).
+March 26, 2024 - 16:58:31
+Django version 4.2.7, using settings 'backdj.settings'
+Starting development server at https://0.0.0.0:8000/
+Using SSL certificate: tls-certificates/cert.pem
+Using SSL key: tls-certificates/key.pem
+Quit the server with CONTROL-C.

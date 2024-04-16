@@ -1,0 +1,10 @@
+.user-list-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.row-friend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

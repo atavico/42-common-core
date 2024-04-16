@@ -1,0 +1,166 @@
+<div class="centralLarge">
+  <div class="card">
+    <div class="row">
+      <div class="col6">
+        <div
+          class="picSmall"
+          [ngStyle]="{ 'background-image': 'url(' + profilePic + ')' }"
+        ></div>
+      </div>
+      <div class="col6">
+        <h2>{{ nickName }}</h2>
+        <div class="idColor">
+          <h4>{{ "#" + idNick }}</h4>
+        </div>
+        <div
+          class="status-dot"
+          [ngStyle]="{ 'background-color': isOnline ? 'green' : 'gray' }"
+        ></div>
+        {{ isOnline ? "Online" : "Offline" }}
+      </div>
+    </div>
+    <div class="error" *ngIf="serverError">{{ serverErrorText }}</div>
+    <h2>{{ statistics }}</h2>
+    <div class="row">
+      <div class="col6">
+        <h6>{{ victorys }}</h6>
+        <p>{{ gamesWon }}</p>
+      </div>
+      <div class="col6">
+        <h6>{{ defeats }}</h6>
+        <p>{{ gamesLost }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col6">
+        <h6>{{ tournamentParticipated }}</h6>
+        <p>{{ tParticipated }}</p>
+      </div>
+      <div class="col6 row">
+        <div class="row">
+          <div class="imgPara">
+            <img
+              src="../../../assets/icons/first.png"
+              alt="{{ firstPlaceStr }}"
+            />
+            <p class="paraImg">{{ tFirstPlace }}</p>
+          </div>
+          <div class="imgPara">
+            <img
+              src="../../../assets/icons/second.png"
+              alt="{{ secondPlaceStr }}"
+            />
+            <p class="paraImg">{{ tSecondPlace }}</p>
+          </div>
+          <div class="imgPara">
+            <img
+              src="../../../assets/icons/third.png"
+              alt="{{ thirdPlaceStr }}"
+            />
+            <p class="paraImg">{{ tThirdPlace }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="head">
+      <h2>{{ gamesPlayed }}</h2>
+      <div class="button-group">
+        <button
+          class="toggle-button"
+          [disabled]="singleTournament == 0"
+          (click)="singleTournament = singleTournament - 1"
+        >
+          <
+        </button>
+        <button
+          class="toggle-button"
+          [disabled]="singleTournament == 3"
+          (click)="singleTournament = singleTournament + 1"
+        >
+          >
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="singleTournament == 0">
+      <h4>1v1</h4>
+      <ul *ngIf="games1.length > 0; else noGames" class="game-list">
+        <li
+          *ngFor="let game of games1"
+          [class.victory]="game.won"
+          [class.defeat]="!game.won"
+          class="game-item"
+        >
+          {{ game.date }} | {{ game.won ? "victory" : "defeat" }} |
+          {{ game.versus }} | {{ game.score }} | {{ game.type }}
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="singleTournament == 1">
+      <h4>{{tournament}}</h4>
+      <ul *ngIf="gamesT.length > 0; else noGames" class="game-list">
+        <li
+          *ngFor="let game of gamesT"
+          [class.victory]="game.won"
+          [class.defeat]="!game.won"
+          class="game-item"
+        >
+          {{ game.date }} | {{ game.placement }} | {{ game.winnerNick }} |
+          {{ game.playerCount }} | {{ game.won ? "victory" : "defeat" }}
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="singleTournament == 2">
+      <h4>1v1 Local</h4>
+      <ul *ngIf="gamesL1.length > 0; else noGames" class="game-list">
+        <li
+          *ngFor="let game of gamesL1"
+          [class.victory]="game.won"
+          [class.defeat]="!game.won"
+          class="game-item"
+        >
+          {{ game.date }} | {{ game.won ? "victory" : "defeat" }} | {{ game.versus }} |
+          {{ game.score }} | {{ game.type }}
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="singleTournament == 3">
+      <h4>Tournament Local</h4>
+      <ul *ngIf="gamesLT.length > 0; else noGames" class="game-list">
+        <li
+          *ngFor="let game of gamesLT"
+          [class.victory]="game.won"
+          [class.defeat]="!game.won"
+          class="game-item"
+        >
+          {{ game.date }} | {{ game.winnerNick }} | {{ game.secondNick }} |
+          {{ game.playerCount }} | {{ game.won ? "victory" : "defeat" }}
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-template #noGames>
+      <p>{{ noGamesPlayed }}</p>
+    </ng-template>
+
+    <div class="overlay" *ngIf="isFriend">
+      <button class="danger btn-Settings" (click)="clickDelete()">
+        <img src="../../../assets/icons/cross.png" alt="" />
+        {{ deleteFriend }}
+      </button>
+    </div>
+    <div class="overlay" *ngIf="isFriendReq">
+      <button class="success btn-Settings" (click)="clickStatus('accepted')">
+        <img src="../../../assets/icons/check.png" alt="" /> {{ addFriend }}
+      </button>
+    </div>
+    <div class="overlay" *ngIf="isFriendReq">
+      <button class="danger btn-Settings" (click)="clickStatus('rejected')">
+        <img src="../../../assets/icons/cross.png" alt="" /> {{ decline }}
+      </button>
+    </div>
+    <button class="warning btn-Settings" (click)="closeProfile()">
+      <img src="../../../assets/icons/back-arrow.png" alt="" /> {{ back }}
+    </button>
+  </div>
+</div>

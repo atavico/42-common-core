@@ -1,0 +1,86 @@
+<!-- app-host-menu.component.html -->
+<app-panel-side></app-panel-side>
+<div class="mainMenuFullHeight">
+  <div class="gameDashboard">
+    <!--Public & Private Buttons-->
+    <div class="centralLarge">
+      <div
+        class="card"
+      >
+        <div class="row">
+          <div class="col6">
+            <button
+              [class.active]="publicOrPrivate === 'public'"
+              (click)="selectMatchType('public')"
+            >
+              {{ publicStr }}
+            </button>
+          </div>
+          <div class="col6">
+            <button
+              [class.active]="publicOrPrivate === 'private'"
+              (click)="selectMatchType('private')"
+            >
+              {{onlyFriendsStr}}
+            </button>
+          </div>
+        </div>
+        <!--Sliders container-->
+        <div style="display: absolute; justify-content: center">
+          <!--Partecipants slider selector-->
+          <div class="row" style="display: flex; align-items: center">
+            <div class="slider-container">
+              <label for="slider">{{ selectStr }} {{ selectedValue }}</label>
+              <input
+                type="range"
+                id="slider"
+                name="slider"
+                min="2"
+                max="8"
+                step="1"
+                [(ngModel)]="selectedValue"
+                (input)="onSliderChange(selectedValue)"
+                style="background-color: white"
+              />
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: center">
+            <span style="align-items: center">{{ matchType | async }}</span>
+          </div>
+
+          <!--Score to win slider selector-->
+          <div class="row" style="display: flex; align-items: center">
+            <div class="slider-container">
+              <input
+                type="range"
+                id="slider"
+                name="slider"
+                min="2"
+                max="10"
+                step="1"
+                [(ngModel)]="selectedScore"
+                style="background-color: white"
+              />
+              <label for="slider">{{ scoreStr }} {{ selectedScore }}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col6">
+              <button (click)="backClick()">
+                <img src="../../../assets/icons/back-arrow.png" alt="" />
+                {{ back }}
+              </button>
+            </div>
+            <div class="col6">
+              <button (click)="createMatch()">
+                <img src="../../../assets/icons/game.png" alt="" />
+                {{ hostMatchStr }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

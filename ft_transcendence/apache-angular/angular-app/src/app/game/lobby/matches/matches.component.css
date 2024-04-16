@@ -1,0 +1,25 @@
+.gray {
+  background-color: var(--g7);
+}
+
+.gray:hover {
+  background-color: var(--g5);
+}
+
+.matchsGrid {
+  display: inline-grid;
+  justify-content: space-between;
+  grid-template-columns: 46% 33% 20%;
+  width: 75%;
+  padding-right: 10px;
+}
+
+.matchGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-container {
+  overflow-y: auto;
+}

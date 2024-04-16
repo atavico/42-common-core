@@ -1,0 +1,132 @@
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { JwtService } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
+import { authenticator } from "otplib";
+
+@Injectable()
+export class AuthService {
+	constructor (
+		public config: ConfigService,
+		private prisma: PrismaService,
+		private jwt: JwtService,
+	) {};
+
+	async receiveAccessToken(body: any) {
+		const newCode = body.data.code
+		return fetch('https://api.intra.42.fr/oauth/token', {
+			method: 'POST',
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			body: new URLSearchParams({
+				grant_type: 'authorization_code',
+				client_id: process.env.CLIENT_ID,
+				client_secret: process.env.CLIENT_SECRET,
+				code: body.data.code,
+				redirect_uri: `http://${process.env.WEBAPPIP}:3000/loggingIn`,
+			})
+		})
+		.then((response) => {
+			if (response.status !== 200) {
+				throw new Error('access token couldn\'t be retrieved:');
+			}
+			return response.json();
+		})
+		.then(async (data) => {
+			this.getTokenInfo(data.access_token);
+			let jwt = await this.getMyUserData(data.access_token);
+			return { access_token: data.access_token, jwt: jwt};
+		})
+	}
+
+	async getTokenInfo(accessToken: string) {
+		return fetch('https://api.intra.42.fr/oauth/token/info', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': `Bearer ${accessToken}`
+			},
+		}).then((response) => {
+			if (!response.ok)
+				throw new Error('ERROR: Token Info couldn\'t be retrieved: \n' + response.status);
+			return response.json();
+		}).then((data) => {
+			return (data.tokenInfo);
+		})
+	}
+
+	async getMyUserData(accessToken: string) {
+		return fetch('https://api.intra.42.fr/v2/me', {
+			method: 'GET',
+			headers: {'Authorization': `Bearer ${accessToken}`}
+		}).then((response) => {
+			if (!response.ok)
+				throw new Error('couldn\'t retrieve User Data\n');
+			return response.json();
+		}).then(async (data) => {
+			let userToken = await this.signupWith42(data, accessToken);
+			return (userToken);
+		})
+	}
+
+	async signupWith42(userData: any, accessToken: string) {
+		const {
+			email,
+			login,
+			first_name,
+			last_name,
+			id,
+		} = userData;
+		const user = await this.prisma.user.findUnique({
+			where: {
+				apiId: id,
+				email: email,
+			},
+		})
+		if (!user) {
+			await this.prisma.user.create({
+				data: {
+					apiId: id,
+					email: email,
+					nickName: login,
+					firstName: first_name,
+					lastName: last_name,
+					token: accessToken,
+					enabled2FA: false,
+				},
+			});
+		} else {
+			await this.prisma.user.update({
+				where: {
+					apiId: id,
+					email: email,
+				},
+				data: {
+					token: accessToken,
+				}
+			})
+		}
+		const userToken = this.jwt.sign({sub: id, nickName: login}, {secret: this.config.get('JWT_SECRET')});
+		// if (user.enabled2FA && user.enabled2FA === true) {
+		// 	//console.log('the user ' + user.nickName + ' has 2FA enabled')
+			// this.TFA(user.email)
+		// }
+		return userToken;
+	}
+
+	// async TFA(email: string) {
+	// 	const service = "TRANSCENDENCE"
+	// 	const secret = authenticator.generateSecret()
+	// 	//console.log('auth-generated secret: ' + secret)
+	// 	const token = authenticator.generate(secret)
+	// 	//console.log('oauth token generated: ' + token)
+	// 	try {
+	// 		//console.log('checking token + secret...')
+	// 		const otpauth = authenticator.keyuri(email, service, secret);
+	// 		//console.log('otpauth: ' + otpauth)
+	// 		const isValid = authenticator.check(token, secret)
+	// 		//console.log('token checked. Validated: ' + isValid)
+	// 	} catch (err) {
+	// 		//console.error(err)
+	// 	}
+	// }
+}

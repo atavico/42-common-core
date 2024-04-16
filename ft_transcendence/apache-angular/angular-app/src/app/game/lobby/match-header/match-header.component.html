@@ -1,0 +1,15 @@
+<div class="blackCard">
+  <div (click)="changePlayWatch()" class="card-header card-img-h3">
+    <img
+      *ngIf="switchWatchMatch"
+      src="../../../../assets/icons/angle-right.png"
+      alt=""
+    />
+    <img
+      *ngIf="!switchWatchMatch"
+      src="../../../../assets/icons/angle-down.png"
+      alt=""
+    />
+    <h3>{{ matchType }}</h3>
+  </div>
+</div>

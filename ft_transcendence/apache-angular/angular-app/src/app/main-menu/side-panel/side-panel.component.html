@@ -1,0 +1,153 @@
+<div class="sideBar">
+  <div class="profilePic">
+    <img
+      src="{{ profilePic }}"
+      alt="profilePic"
+      (click)="openProfile(user, ProfileType.UPROFILE)"
+    />
+  </div>
+  <h2 class="nickProf" (click)="openProfile(user, ProfileType.UPROFILE)">
+    {{ nickName }}
+  </h2>
+  <div class="idColor">
+    <h3>{{ "#" + idNick }}</h3>
+  </div>
+  <button class="btn-Settings" (click)="openAddFriend()">
+    <img src="../../../assets/icons/user-add.png" alt="" /> {{ addFriendHtml }}
+  </button>
+  <div class="divider"></div>
+  <div class="sideBarSub">
+    <details open>
+      <summary (click)="getFriendList()">{{ friends }}</summary>
+      <ul class="user-list">
+        <p class="no-bullet" *ngIf="friendListArray.length === 0">
+          {{ emptyFriend }}
+        </p>
+        <li
+          *ngFor="let friend of friendListArray"
+          (click)="openProfile(friend.id, ProfileType.FRIEND)"
+          class="friend-item"
+        >
+          <div
+            class="friend-name"
+            [ngStyle]="{
+              color: friend.isOnline ? 'inherit' : 'rgb(180, 180, 180)'
+            }"
+          >
+            {{ friend.nick }}
+            <div class="idColor" style="display: inline">#{{ friend.id }}</div>
+          </div>
+          <span
+            class="status-dot"
+            [ngStyle]="{
+              'background-color': friend.isOnline ? 'green' : 'gray'
+            }"
+          ></span>
+        </li>
+      </ul>
+    </details>
+    <details open>
+      <summary (click)="getPendingRequest()">{{ friendsRequests }}</summary>
+      <ul class="user-list">
+        <p class="no-bullet" *ngIf="getFriendRequest.length === 0">
+          {{ emptyFriendRequest }}
+        </p>
+        <li
+          *ngFor="let friendreq of getFriendRequest"
+          (click)="openProfile(friendreq.id, ProfileType.FRIENDREQ)"
+          class="friend-item"
+        >
+          <div class="friend-name">
+            {{ friendreq.nick }}
+            <div class="idColor" style="display: inline">
+              #{{ friendreq.id }}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </details>
+  </div>
+  <div class="sideBarBottom">
+    <button class="btn-Settings" (click)="openSettings()">
+      <img src="../../../assets/icons/settings.png" alt="" /> {{ settings }}
+    </button>
+    <button class="btn-Settings" (click)="logOut()">
+      <img src="../../../assets/icons/logout.png" alt="" /> {{ logout }}
+    </button>
+  </div>
+</div>
+
+<div class="topPanel">
+  <button (click)="openProfile(user, ProfileType.UPROFILE)">
+    {{ nickName }}
+  </button>
+  <button (click)="logOut()">Logout</button>
+</div>
+
+<div class="bottomPanel">
+  <button (click)="openSettings()">{{ settings }}</button>
+  <button (click)="openAddFriend()">{{ addFriendHtml }}</button>
+  <button (click)="openFriendList()">{{ friends }}</button>
+</div>
+
+<div class="overlay" *ngIf="isSettingsOpen">
+  <app-settings></app-settings>
+</div>
+<div class="overlay" *ngIf="isAddFriendOpen">
+  <app-add-friend></app-add-friend>
+</div>
+<div class="overlay" *ngIf="isProfileOpen">
+  <app-profile></app-profile>
+</div>
+
+<!-- .user-list {
+  max-height: 200px;
+  overflow-y: auto;
+} -->
+
+<div class="overlay" *ngIf="isFriendListOpen">
+  <div class="centralLarge">
+    <div class="card">
+      <div class="row">
+        <div class="col6">
+          <h3>{{ friends }}</h3>
+          <ul>
+            <p class="no-bullet" *ngIf="friendListArray.length === 0">
+              {{ emptyFriend }}
+            </p>
+            <li
+              *ngFor="let friend of friendListArray"
+              (click)="openProfile(friend.id, ProfileType.FRIEND)"
+              class="friend-item"
+            >
+              <div class="friend-name">
+                {{ friend.nick + " #" + friend.id }}
+              </div>
+              <span
+                class="status-dot"
+                [ngStyle]="{
+                  'background-color': friend.isOnline ? 'green' : 'gray'
+                }"
+              ></span>
+            </li>
+          </ul>
+        </div>
+        <div class="col6">
+          <h3>REQUESTS</h3>
+          <ul>
+            <p class="no-bullet" *ngIf="getFriendRequest.length === 0">
+              {{ emptyFriendRequest }}
+            </p>
+            <li
+              *ngFor="let friendreq of getFriendRequest"
+              (click)="openProfile(friendreq.id, ProfileType.FRIENDREQ)"
+            >
+              {{ friendreq.nick + " #" + friendreq.id }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <button class="warning" (click)="closeFriendList()">close</button>
+  </div>
+</div>

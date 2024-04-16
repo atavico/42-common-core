@@ -1,0 +1,52 @@
+<div class="centralLarge">
+  <div class="card">
+    <h1>{{ signupform }}</h1>
+    <form
+      [formGroup]="signupForm"
+      (keydown.enter)="$event.preventDefault(); onSignUp()"
+    >
+      <div class="error" *ngIf="errors.serverError">
+        {{ serverErrorText }}
+      </div>
+      <div class="error" *ngIf="errors.serverMsg">
+        {{ serverMsgText + errorMsg }}
+      </div>
+      <label for="email"> Email </label>
+      <input
+        id="email"
+        type="text"
+        formControlName="email"
+        [placeholder]="insertEmail"
+      />
+      <div class="error" *ngIf="errors.email">{{ emailWrong }}</div>
+      <div class="error" *ngIf="errors.emailMissing">{{ emailMissing }}</div>
+
+      <label for="password"> Password </label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [placeholder]="insertPassword"
+      />
+      <div class="error" *ngIf="errors.password">{{ passwordWrong }}</div>
+      <p *ngIf="errors.password">
+        {{ passwordRule1 }}<br />
+        {{ passwordRule2 }}<br />
+        {{ passwordRule3 }}<br />
+        {{ passwordRule4 }}<br />
+        {{ passwordRule5 }}<br />
+        {{ passwordRule6 }}
+      </p>
+      <div class="error" *ngIf="errors.passwordMissing">
+        {{ passwordMissing }}
+      </div>
+    </form>
+    <button class="logbutton" type="submit" (click)="onSignUp()">
+      <img src="../../../assets/icons/writing.png" alt="" />
+      {{ signUp }}
+    </button>
+    <button (click)="clickBack()">
+      <img src="../../../assets/icons/back-arrow.png" alt="" /> {{ back }}
+    </button>
+  </div>
+</div>

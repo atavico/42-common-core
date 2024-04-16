@@ -1,0 +1,38 @@
+<div class="mainMenu">
+  <div class="gameDashboard">
+    <div class="field">
+      <div class="paddleLeft"></div>
+      <div class="paddleRight"></div>
+      <div class="animatedBall"></div>
+      <!-- <div class="ball"></div> -->
+    </div>
+    <button
+      (click)="openLobbyT()"
+      class="black"
+      style="
+        width: 30%;
+        position: absolute;
+        top: 47%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+      "
+    >
+      {{ playRStr }}
+    </button>
+    <button
+      (click)="openLobbyL()"
+      class="black"
+      style="
+        width: 30%;
+        position: absolute;
+        top: 53%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+      "
+    >
+      {{ playLStr }}
+    </button>
+  </div>
+</div>

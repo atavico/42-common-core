@@ -1,0 +1,3 @@
+#to exec inside elasticsearch container
+bin/elasticsearch-certutil ca -pem
+elasticsearch-certutil cert --self-signed --multiple --days 1825 --pem --in instance.yml --out self-signed-certs.zip

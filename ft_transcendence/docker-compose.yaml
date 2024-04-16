@@ -1,0 +1,169 @@
+version: '3.4'
+
+services:
+    db:
+        image: postgres:15-alpine
+        container_name: postgres
+        hostname: ${POSTGRES_HOSTNAME}
+        build: postgresql/
+        environment:
+          - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          - POSTGRES_USER=${POSTGRES_USER}
+          - POSTGRES_DB=${POSTGRES_DB}
+        volumes:
+          - postgre-data:/var/lib/postgresql/data/
+        networks:
+          - django-postgre-vault
+
+    vault:
+        image: hashicorp/vault
+        container_name: vault
+        build: vault/
+        cap_add:
+            - IPC_LOCK
+        ports:
+            - "8200:8200"
+        environment:
+          - VAULT_ADDR=${VAULT_ADDR}
+          - VAULT_DEV_LISTEN_ADDRESS=${VAULT_DEV_LISTEN_ADDRESS}
+          - VAULT_SKIP_VERIFY=TRUE
+          - VAULT_CACERT=/tls-certificates/cert.pem
+          - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+          - POSTGRES_USER=${POSTGRES_USER}
+          - POSTGRES_DB=${POSTGRES_DB}
+          - OAUTH_CLIENT_ID=${OAUTH_CLIENT_ID}
+          - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET}
+          - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+          - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
+          - KIBANA_ENCRYPTIONKEY=${KIBANA_ENCRYPTIONKEY}
+          - BLOCKCHAIN_URL=${BLOCKCHAIN_URL}
+          - WALLET=${WALLET}
+          - PRIVATEKEY=${PRIVATEKEY}
+          - SMARTCONTRACT=${SMARTCONTRACT}
+          - DJANGO_KEY=${DJANGO_KEY}
+        volumes:
+          - ./vault/shared-volume:/shared-volume
+          - elk-vault:/elastic-shared
+        networks:
+            - django-postgre-vault
+            - elk
+
+    redis:
+        image: redis:7.2.3-alpine3.19
+        container_name: my-redis
+        hostname: ${REDIS_HOSTNAME}
+        ports:
+            - "6380:$REDIS_PORT"
+        networks:
+            - django-redis
+
+    apache-angular:
+        build: 
+            context: apache-angular/
+            args:
+                - IP_ADDR=${IP_ADDR}
+        container_name: apache-angular
+        ports:
+            # - "4242:80"
+            - "4343:443"
+            # - "4344:443"
+        environment:
+            - IP_ADDR=${IP_ADDR}
+        volumes:
+            #- ./apache-angular/logs:/var/log/apache2/shared
+            - apache-logstash:/var/log/apache2/shared
+
+
+    backend:
+        build: django/
+        container_name: django-back
+        ports:
+          - "8000:8000"
+          - "8001:8001"
+        volumes:
+          - ./media:/app/media
+          - ./django:/app/backend
+          - ./vault/shared-volume:/app/backend/shared-volume
+        environment:
+          - POSTGRES_HOSTNAME=${POSTGRES_HOSTNAME}
+          - POSTGRES_DB=${POSTGRES_DB}
+          - REDIS_HOST=${REDIS_HOSTNAME}
+          - REDIS_PORT=${REDIS_PORT}
+          - BLOCKCHAIN_URL=${BLOCKCHAIN_URL}
+          - WALLET=${WALLET}
+          - PRIVATEKEY=${PRIVATEKEY}
+          - SMARTCONTRACT=${SMARTCONTRACT}
+          - IP_ADDR=${IP_ADDR}
+        depends_on:
+          - db
+          - redis
+          - vault
+        networks:
+          - django-postgre-vault
+          - django-redis
+    
+    elasticsearch:
+        build: elk/elasticsearch/
+        container_name: elasticsearch
+        volumes:
+            - elk-vault:/usr/share/elasticsearch/elk-vault-shared
+        environment:
+          ELASTIC_PASSWORD: ${ELASTIC_TEMP_PASSWORD}
+          ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+          discovery.type: single-node
+        ports:
+          - '9200:9200'
+        depends_on:
+          - vault
+        networks:
+          - elk
+
+    logstash:
+        build: elk/logstash/
+        container_name: logstash
+        volumes:
+          - apache-logstash:/usr/share/logstash/shared-volume
+          - elk-vault:/usr/share/logstash/elk-vault-shared
+        depends_on:
+          - elasticsearch
+        environment:
+          LS_JAVA_OPTS: "-Dls.cgroup.cpuacct.path.override=/ -Dls.cgroup.cpu.path.override=/"
+        networks:
+          - elk
+
+    kibana:
+        build: elk/kibana/
+        container_name: kibana
+        volumes:
+          - elk-vault:/usr/share/kibana/elk-vault-shared
+        ports:
+          - '5601:5601'
+        environment:
+          - ELASTICSEARCH_URL=https://elasticsearch:9200
+        depends_on:
+          - elasticsearch
+        networks:
+          - elk
+
+    password_resetter:
+        build: elk/password_setter/
+        container_name: password_setter
+        volumes:
+            - elk-vault:/usr/share/psw_res/elk-vault-shared
+        environment:
+          ELASTIC_PASSWORD: ${ELASTIC_TEMP_PASSWORD}
+        depends_on:
+          - elasticsearch
+        networks:
+          - elk
+
+volumes:
+    postgre-data:
+    elk-vault:
+    apache-logstash:
+
+
+networks:
+    django-postgre-vault:
+    django-redis:
+    elk:

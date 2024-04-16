@@ -1,0 +1,22 @@
+.no-bullet {
+  padding-left: 10%;
+  list-style-type: none;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.friend-name {
+  margin-right: 10px;
+}
+
+.status-dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}

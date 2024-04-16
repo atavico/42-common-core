@@ -1,0 +1,20 @@
+<div class="matchGrid list-container">
+  <div class="matchsGrid">
+    <p>
+      {{ getCreator(match.creator) }} #{{ match.creator }}
+    </p>
+    <p>
+      {{ match.score_to_win }}
+    </p>
+    <p *ngIf="playerNbr > 0">{{ playerNbr }}/{{ match.max_partecipants }}</p>
+  </div>
+  <div style="flex: 1">
+    <button class="gray" (click)="joinToMatch(match)">
+      <ng-template #friendInsideTemplate>
+        <img src="../../../../assets/icons/users-green.png" alt="">
+      </ng-template>
+      <img *ngIf="!friendInside; else friendInsideTemplate" src="../../../../assets/icons/users.png" alt="">
+      {{ JoinWatch }}
+    </button>
+  </div>
+</div>

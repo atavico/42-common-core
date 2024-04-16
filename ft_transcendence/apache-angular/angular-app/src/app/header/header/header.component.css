@@ -1,0 +1,63 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header > nav {
+  flex-grow: 0;
+  width: auto;
+}
+
+.header-button {
+  cursor: pointer;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  transition: transform 0.3s;
+}
+
+.header-button:hover {
+  transform: scale(1.1);
+}
+
+.header-button:active {
+  transform: scale(0.9);
+}
+
+button img {
+  width: 40px;
+  height: 40px;
+}
+
+.header-button img {
+  width: 40px;
+  height: 40px;
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .header-button:not(:nth-child(2)) {
+    display: none;
+  }
+}
+
+img {
+  margin-right: 0px;
+}
+
+.volume-slider {
+  width: 100px;
+}
+
+/* 
+input[type="range"] {
+  background-color: white;
+} */

@@ -1,0 +1,32 @@
+<div class="centralLarge">
+  <div class="card">
+    <h3>{{ addFriendHtml }}</h3>
+    <div class="error" *ngIf="errorServer">{{ serverErrorText }}</div>
+    <form [formGroup]="addFriendForm">
+      <input
+        id="searchUser"
+        type="text"
+        formControlName="searchUser"
+        [placeholder]="nickPlaceholder"
+      />
+      <button (click)="searchUser()">
+        <img src="../../../assets/icons/search.png" alt="" /> {{ search }}
+      </button>
+    </form>
+    <div class="user-list-container">
+      <div class="row-friend" *ngFor="let user of userList">
+        <div class="col6">
+          <p>{{ user }}</p>
+        </div>
+        <div class="col6">
+          <button (click)="addFriendClicked(user)">
+            <img src="../../../assets/icons/user-add.png" alt="" /> {{ add }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="warning btn-Settings" (click)="closeAddFriend()">
+      <img src="../../../assets/icons/back-arrow.png" alt="" /> {{ back }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<app-panel-side></app-panel-side>
+<div class="mainMenu">
+  <h1>Local Game</h1>
+  <h3>
+    Please insert nickname for each player. If there are 2 nicknames, a 1v1
+    match will be played. If there are 3+ nicknames, a tournament will be
+    created. You can chose an avatar for each new player
+  </h3>
+  <h4>To win, you need to score 3 points</h4>
+
+  <h6 class="error" *ngIf="errorPartecimants">You can't play alone</h6>
+  <h6 class="error" *ngIf="errorSameNick">
+    There cannot be more than one person with the same nickname.
+  </h6>
+
+  <div class="divider"></div>
+  <div class="row">
+    <div class="col4">
+      <h6>Partecipants: {{ getEnteredPlayersCount() }}</h6>
+    </div>
+    <div class="col4">
+      <h6 *ngIf="getEnteredPlayersCount() > 2">Tournament</h6>
+      <h6 *ngIf="getEnteredPlayersCount() < 3">1v1 Match</h6>
+    </div>
+    <div class="col4">
+      <h6>Input: Nickname, Selector: Avatar</h6>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col3" *ngFor="let player of players; let i = index">
+      <div
+        class="card"
+        [ngStyle]="{ 'box-shadow': player.nick ? '0px 0px 16px  green' : '' }"
+      >
+        <p>Player {{ i + 1 }}</p>
+        <input
+          type="text"
+          placeholder="Insert nickname"
+          [(ngModel)]="player.nick"
+          maxlength="8"
+          [disabled]="i === 0"
+        />
+        <select *ngIf="i != 0" [(ngModel)]="player.avatar">
+          <option *ngFor="let animal of animals" [value]="animal">
+            {{ animal }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col6">
+      <button (click)="onBack()">Back</button>
+    </div>
+    <div class="col6">
+      <button (click)="onPlay()">Play!</button>
+    </div>
+  </div>
+</div>

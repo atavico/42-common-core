@@ -1,0 +1,35 @@
+<header class="header">
+  <div>
+    <h2>ft_transcendence</h2>
+  </div>
+  <div style="margin-top: auto; z-index: 2">
+    <div class="buttons">
+      <button class="header-button" (click)="onPrevious()">
+        <img src="../../../assets/icons/arrow-left.png" alt="Previous" />
+      </button>
+      <button class="header-button" (click)="onToggle()">
+        <img
+          [src]="
+            audioSwitch
+              ? '../../../assets/icons/stop.png'
+              : '../../../assets/icons/play.png'
+          "
+          alt="Toggle Music"
+        />
+      </button>
+      <button class="header-button" (click)="onNext()">
+        <img src="../../../assets/icons/arrow-right.png" alt="Next" />
+      </button>
+    </div>
+    <div style="z-index: -1;">
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.1"
+        [(ngModel)]="volume"
+        (input)="adjustVolume()"
+      />
+    </div>
+  </div>
+</header>

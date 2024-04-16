@@ -1,0 +1,21 @@
+instances:
+  - name: es
+    dns:
+      - elasticsearch 
+      - localhost
+    ip:
+      - 127.0.0.1
+
+  - name: ls
+    dns:
+      - logstash
+      - localhost
+    ip:
+      - 127.0.0.1
+
+  - name: ki
+    dns:
+      - kibana
+      - localhost
+    ip:
+      - 127.0.0.1

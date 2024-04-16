@@ -1,0 +1,91 @@
+.hostMenu {
+	position: fixed;
+  height: 100%;
+	top: 76px;
+	left: 220px;
+	right: 0px;
+	padding: 8px;
+	bottom: 20px;
+	background-color: var(--aleAzure);
+	color: white;
+	overflow-y: auto;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.slider-container {
+  width: 80%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 10px;
+  /* Imposta il colore della barra a bianco */
+  background-color: rgba(255, 255, 255, 0.859);
+  /* Nascondi i controlli predefiniti dello slider */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  /* Imposta il colore del cursore a bianco */
+  background: red;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  /* Imposta il colore del cursore a rosso */
+  background: red;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+span {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+button.active {
+  background: #ffffffad;
+  color: #1B365C;
+}
+
+/* .checkbox-container {
+  display:flex;
+} */
+
+.checkbox-label {
+  background-color: blanchedalmond;
+  display:flex;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.gray {
+  background-color: var(--g7);
+}
+
+.gray:hover {
+  background-color: var(--g5);
+}

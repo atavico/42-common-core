@@ -1,0 +1,27 @@
+<div class="sideBar">
+  <div class="profilePic">
+    <img src="{{ profilePic }}" alt="profilePic" />
+  </div>
+  <h2>{{ nickName }}</h2>
+  <div class="idColor">
+    <h3>{{ "#" + idNick }}</h3>
+  </div>
+  <div class="divider"></div>
+  <ul class="user-list">
+    <p class="no-bullet" *ngIf="friendListArray.length === 0">
+      {{ emptyFriend }}
+    </p>
+    <li *ngFor="let friend of friendListArray" class="friend-item">
+      <div class="friend-name">
+        {{ friend.nick }}
+        <div class="idColor" style="display: inline">#{{ friend.id }}</div>
+      </div>
+      <span
+        class="status-dot"
+        [ngStyle]="{
+          'background-color': friend.isOnline ? 'green' : 'gray'
+        }"
+      ></span>
+    </li>
+  </ul>
+</div>

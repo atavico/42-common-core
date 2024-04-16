@@ -1,0 +1,12 @@
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["https://elasticsearch:9200"]
+elasticsearch.serviceAccountToken: ${SA_TOKEN}
+
+elasticsearch.ssl.certificateAuthorities: /usr/share/kibana/config/ca.crt
+server.ssl.certificate: /usr/share/kibana/config/ki.crt
+server.ssl.key: /usr/share/kibana/config/ki.key
+server.ssl.enabled: true
+
+
+xpack.security.encryptionKey: ${KIBANA_ENCRYPTIONKEY}
+

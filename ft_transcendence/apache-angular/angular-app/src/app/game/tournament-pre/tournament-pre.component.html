@@ -1,0 +1,282 @@
+<div class="row">
+  <div class="col4">
+    <h1>{{ finalsStr }}</h1>
+  </div>
+  <ng-container *ngFor="let user of usersFinal; let i = index">
+    <div class="col4" *ngIf="i % 2 === 0">
+      <div
+        class="card"
+        [ngStyle]="{
+          'box-shadow': shadowCard(usersFinal[i].id, 'finals')
+            ? '0px 0px 5px 5px green'
+            : 'none'
+        }"
+      >
+        <h2 *ngIf="i >= 2">{{ firstSecondPlaceStr }}</h2>
+        <h2 *ngIf="i < 2">{{ thirdFourthPlaceStr }}</h2>
+        <div class="row">
+          <div class="col6FastCollapse" *ngIf="usersFinal[i].id != -1">
+            <div
+              class="picMedium"
+              [ngStyle]="{
+                'background-image': 'url(' + usersFinal[i].avatar + ')'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersFinal[i].username }}</strong> #{{
+                usersFinal[i].id
+              }}
+            </h5>
+            <button
+              *ngIf="myTurn(usersFinal[i].id, 'finals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+              (click)="nextMatchReady()"
+              [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <ng-container *ngIf="myOpponent(usersFinal[i].id); else elseThis">
+                <button
+                  disabled
+                  [innerHTML]="
+                    changeButton1(usersFinal[i].id) ? 'Ready' : 'Unready'
+                  "
+                ></button>
+              </ng-container>
+              <ng-template #elseThis>
+                <button disabled>{{ notMyTurn }}</button>
+              </ng-template>
+            </ng-template>
+          </div>
+          <div class="col6FastCollapse" *ngIf="usersFinal[i + 1].id != -1">
+            <div
+              class="picMedium"
+              [ngStyle]="{
+                'background-image': 'url(' + usersFinal[i + 1].avatar + ')'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersFinal[i + 1].username }}</strong> #{{
+                usersFinal[i + 1].id
+              }}
+            </h5>
+            <button
+              *ngIf="myTurn(usersFinal[i + 1].id, 'finals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+              (click)="nextMatchReady()"
+              [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <ng-container
+                *ngIf="myOpponent(usersFinal[i + 1].id); else elseThis"
+              >
+                <button
+                  disabled
+                  [innerHTML]="
+                    changeButton2(usersFinal[i + 1].id) ? 'Ready' : 'Unready'
+                  "
+                ></button>
+              </ng-container>
+              <ng-template #elseThis>
+                <button disabled>{{ notMyTurn }}</button>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div class="divider"></div>
+<div class="row">
+  <div class="col4">
+    <h1>{{ semiFinalsStr }}</h1>
+  </div>
+  <ng-container *ngFor="let user of usersSemi; let i = index">
+    <div class="col4" *ngIf="i % 2 === 0">
+      <div
+        class="card"
+        [ngStyle]="{
+          'box-shadow': shadowCard(usersSemi[i].id, 'semifinals')
+            ? '0px 0px 5px 5px green'
+            : 'none'
+        }"
+      >
+        <div class="row">
+          <div class="col6FastCollapse" *ngIf="usersSemi[i].id != -1">
+            <div
+              class="picSmall"
+              [ngStyle]="{
+                'background-image': 'url(' + usersSemi[i].avatar + ')',
+                filter:
+                  turn != 'semifinals' && turn != 'quarters'
+                    ? 'grayscale(90%)'
+                    : 'none'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersSemi[i].username }}</strong> #{{
+                usersSemi[i].id
+              }}
+            </h5>
+            <button
+              *ngIf="myTurn(usersSemi[i].id, 'semifinals'); else notMyTurnIF"
+              [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+              (click)="nextMatchReady()"
+              [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <ng-container *ngIf="myOpponent(usersSemi[i].id); else elseThis">
+                <button
+                  disabled
+                  [innerHTML]="
+                    changeButton1(usersSemi[i].id) ? 'Ready' : 'Unready'
+                  "
+                ></button>
+              </ng-container>
+              <ng-template #elseThis>
+                <button disabled>{{ notMyTurn }}</button>
+              </ng-template>
+            </ng-template>
+          </div>
+          <div class="col6FastCollapse" *ngIf="usersSemi[i + 1].id != -1">
+            <div
+              class="picSmall"
+              [ngStyle]="{
+                'background-image': 'url(' + usersSemi[i + 1].avatar + ')',
+                filter:
+                  turn != 'semifinals' && turn != 'quarters'
+                    ? 'grayscale(90%)'
+                    : 'none'
+              }"
+            ></div>
+            <h5>
+              <strong>{{ usersSemi[i + 1].username }}</strong> #{{
+                usersSemi[i + 1].id
+              }}
+            </h5>
+            <button
+              *ngIf="
+                myTurn(usersSemi[i + 1].id, 'semifinals');
+                else notMyTurnIF
+              "
+              [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+              (click)="nextMatchReady()"
+              [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+            ></button>
+            <ng-template #notMyTurnIF>
+              <ng-container
+                *ngIf="myOpponent(usersSemi[i + 1].id); else elseThis"
+              >
+                <button
+                  disabled
+                  [innerHTML]="
+                    changeButton2(usersSemi[i + 1].id) ? 'Ready' : 'Unready'
+                  "
+                ></button>
+              </ng-container>
+              <ng-template #elseThis>
+                <button disabled>{{ notMyTurn }}</button>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div *ngIf="allValuesNull() == false">
+  <div class="divider"></div>
+  <h1>{{ quartersStr }}</h1>
+  <div class="row">
+    <ng-container *ngFor="let user of usersQuarter; let i = index">
+      <div class="col3" *ngIf="i % 2 === 0">
+        <div
+          class="card"
+          [ngStyle]="{
+            'box-shadow': shadowCard(usersQuarter[i].id, 'quarters')
+              ? '0px 0px 5px 5px green'
+              : 'none'
+          }"
+        >
+          <div class="row">
+            <div class="col6FastCollapse" *ngIf="usersQuarter[i].id != -1">
+              <div
+                class="picSmall"
+                [ngStyle]="{
+                  'background-image': 'url(' + usersQuarter[i].avatar + ')',
+                  filter: turn != 'quarters' ? 'grayscale(90%)' : 'none'
+                }"
+              ></div>
+              <h5>
+                <strong>{{ usersQuarter[i].username }}</strong> #{{
+                  usersQuarter[i].id
+                }}
+              </h5>
+              <button
+                *ngIf="myTurn(usersQuarter[i].id, 'quarters'); else notMyTurnIF"
+                [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+                (click)="nextMatchReady()"
+                [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+              ></button>
+              <ng-template #notMyTurnIF>
+                <ng-container
+                  *ngIf="myOpponent(usersQuarter[i].id); else elseThis"
+                >
+                  <button
+                    disabled
+                    [innerHTML]="
+                      changeButton1(usersQuarter[i].id) ? 'Ready' : 'Unready'
+                    "
+                  ></button>
+                </ng-container>
+                <ng-template #elseThis>
+                  <button disabled>{{ notMyTurn }}</button>
+                </ng-template>
+              </ng-template>
+            </div>
+            <div class="col6FastCollapse" *ngIf="usersQuarter[i + 1].id != -1">
+              <div
+                class="picSmall"
+                [ngStyle]="{
+                  'background-image': 'url(' + usersQuarter[i + 1].avatar + ')',
+                  filter: turn != 'quarters' ? 'grayscale(90%)' : 'none'
+                }"
+              ></div>
+              <h5>
+                <strong>{{ usersQuarter[i + 1].username }}</strong> #{{
+                  usersQuarter[i + 1].id
+                }}
+              </h5>
+              <button
+                *ngIf="
+                  myTurn(usersQuarter[i + 1].id, 'quarters');
+                  else notMyTurnIF
+                "
+                [ngClass]="{ success: readyToPlay, danger: !readyToPlay }"
+                (click)="nextMatchReady()"
+                [innerHTML]="readyToPlay ? 'Ready' : 'Unready'"
+              ></button>
+              <ng-template #notMyTurnIF>
+                <ng-container
+                  *ngIf="myOpponent(usersQuarter[i + 1].id); else elseThis"
+                >
+                  <button
+                    disabled
+                    [innerHTML]="
+                      changeButton2(usersQuarter[i + 1].id)
+                        ? 'Ready'
+                        : 'Unready'
+                    "
+                  ></button>
+                </ng-container>
+                <ng-template #elseThis>
+                  <button disabled>{{ notMyTurn }}</button>
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+<div *ngIf="isTour">
+    <div class="row" style="display: flex; justify-content: center;">
+        <h3>{{tourPlacementStr}}</h3>
+    </div>
+    <div class="row">
+        <div class="col4">
+            <div class="card">
+                <h2 style="text-align: center;">1°</h2>
+                <!-- <img src="../../../assets/icons/first.png"/> -->
+                <!-- <img class="picSmall" [src]="firstAvatar"/> -->
+                <div class="picMedium" [ngStyle]="{'background-image': 'url(' + firstAvatar + ')'}"></div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <p id="username-first"></p>
+                    <p id="id-first"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col4">
+            <div class="card">
+                <h2 style="text-align: center;">2°</h2>
+                <!-- <img src="../../../assets/icons/second.png"/> -->
+                <!-- <img class="picSmall" [src]="secondAvatar"/> -->
+                <div class="picMedium" [ngStyle]="{'background-image': 'url(' + secondAvatar + ')'}"></div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <p id="username-second"></p>
+                    <p id="id-second"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col4">
+            <div class="card">
+                <h2 style="text-align: center;">3°</h2>
+                <!-- <img src="../../../assets/icons/third.png"/> -->
+                <!-- <img class="picSmall" [src]="thirdAvatar"/> -->
+                <div class="picMedium" [ngStyle]="{'background-image': 'url(' + thirdAvatar + ')'}"></div>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <p id="username-third"></p>
+                    <p id="id-third"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isTour">
+    <div style="display: flex; justify-content: center;">
+        <p style="margin: 30px 0;">{{blockchainStr}}</p>
+    </div>
+    <button (click)="toEtherscan()">{{sepholiaViewStr}}</button>
+    <button (click)="blockchainDataReq()">{{requestBlockStr}}</button>
+    <div style="border: solid 0.5px" *ngIf="blockchainData">
+        <h2>{{blockchainDataStr}}</h2>
+        <div style="display: flex; flex-direction: column; height: 25%; width: 100%;">
+            <div class="row" style="display: flex; flex-direction: row;">
+                <div class="col4" style="display: flex; flex: 1; flex-direction: column;"  *ngIf="!allValuesNull()">
+                    <div class="row">
+                        <p>{{quartersStr}}</p>
+                    </div>
+                    <div style="display: flex; flex: 1; flex-direction: column; justify-content: space-around;">
+                        <div class="row" *ngFor="let i of quarterArray; let idx = index">
+                            <div class="row">
+                                <p [ngStyle]="{'background-color': isWinnerq(i, idx, 0) ? 'green' : 'initial'}">#{{i[0]}}</p>
+                            </div>
+                            <div class="row">
+                                <p [ngStyle]="{'background-color': isWinnerq(i, idx, 1) ? 'green' : 'initial'}">#{{i[1]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col4" style="display: flex; flex: 1; flex-direction: column;">
+                    <div class="row">
+                        <p>{{semiFinalsStr}}</p>
+                    </div>
+                    <div style="display: flex; flex: 1; flex-direction: column; justify-content: space-around;">
+                        <div class="row" *ngFor="let i of semiArray; let idx = index">
+                            <div class="row">
+                                <p [ngStyle]="{'background-color': isWinners(i, idx, 0) ? 'green' : 'initial'}">#{{i[0]}}</p>
+                            </div>
+                            <div class="row">
+                                <p [ngStyle]="{'background-color': isWinners(i, idx, 1) ? 'green' : 'initial'}">#{{i[1]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col4" style="display: flex; flex: 1; flex-direction: column;">
+                    <div class="row">
+                        <p>{{finalsStr}}</p>
+                    </div>
+                    <div style="display: flex; flex: 1; flex-direction: column; justify-content: space-around;">
+                        <div class="row" *ngFor="let i of finalArray; let idx = index">
+                          <div class="row">
+                            <p [ngStyle]="{'background-color': isWinnerf(i, idx, 0) ? 'green' : 'initial'}">#{{i[0]}}</p>
+                          </div>
+                          <div class="row">
+                            <p [ngStyle]="{'background-color': isWinnerf(i, idx, 1) ? 'green' : 'initial'}">#{{i[1]}}</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col4" style="display: flex; flex: 1; flex-direction: column;">
+                    <div class="row"><p>{{winnerStr}}</p></div>
+                    <div style="display: flex; flex: 1; flex-direction: column; justify-content: space-around;">
+                        <div class="row">
+                            <p>#{{fWin[1]}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <a style="text-align: center;" href="https://sepolia.etherscan.io">https://sepolia.etherscan.io</a> -->
+    </div>
+    <button routerLink="/main-menu">{{backHome}}</button>
+</div>
+
+<div *ngIf="!isTour">
+  <div class="centralLarge">
+    <div class="card">
+        <h2 style="text-align: center;">{{winnerStr}}</h2>
+        <!-- <img class="picLarge" [src]="winnerAvatar"/> -->
+        <div class="picMedium" [ngStyle]="{'background-image': 'url(' + winnerAvatar + ')'}"></div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <p id="username-winner"></p>
+            <p id="id-winner"></p>
+        </div>
+      <button routerLink="/main-menu">{{backHome}}</button>
+    </div>
+  </div>
+</div>

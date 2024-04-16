@@ -1,0 +1,13 @@
+<div class="centralLarge">
+  <div class="card">
+    <h2 style="text-align: center">{{ winnerStr }}</h2>
+    <div
+      class="picMedium"
+      [ngStyle]="{ 'background-image': 'url(' + winnerAvatar + ')' }"
+    ></div>
+    <div style="display: flex; justify-content: center; align-items: center">
+      <p>{{ winnerNick }}</p>
+    </div>
+    <button (click)="onBackHome()">{{ backHome }}</button>
+  </div>
+</div>

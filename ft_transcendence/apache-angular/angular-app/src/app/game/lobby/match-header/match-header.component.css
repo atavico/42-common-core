@@ -1,0 +1,9 @@
+.card-img-h3 {
+  display: flex;
+  align-items: center;
+}
+
+.card-header img {
+  width: 40px;
+  height: 40px;
+}

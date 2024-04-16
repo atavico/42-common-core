@@ -1,0 +1,11 @@
+<div class="centralLarge">
+  <div class="card">
+    <div style="margin-top: 16px; margin-bottom:16px; text-align: center;">
+    <h2>ft_transcendence</h2>
+    <p *ngIf="loading">{{ loadingStr }}</p>
+      <a href="https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-c5652c007ed8a95008fc720b61807f2f17ce23c477bb8e1ff5585508de4c03d0&redirect_uri=https%3A%2F%2F{{ ip }}%3A4343%2F&response_type=code">{{ login42 }}</a>
+    </div>
+    <button (click)="clickSignup()">{{ signUp }}</button>
+    <button (click)="clickLogin()">{{ login }}</button>
+  </div>
+</div>

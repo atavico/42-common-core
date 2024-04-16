@@ -1,0 +1,24 @@
+<app-panel-side></app-panel-side>
+
+<div class="mainMenuFullHeight">
+  <div class="gameDashboard">
+    <div class="dashTop">
+      <div class="row align-items d-flex">
+        <img class="profilePic" [src]="player1Avatar" alt="avatar" />
+        <p>{{ player1Nick }}</p>
+      </div>
+      <div class="row align-items d-flex">
+        <h1>{{ score1 }} - {{ score2 }}</h1>
+      </div>
+      <div class="row">
+        <p>{{ player2Nick }}</p>
+        <img class="profilePic" [src]="player2Avatar" alt="avatar" />
+      </div>
+    </div>
+    <div class="field">
+      <div class="p1" id="p1_paddle" [ngStyle]="paddle_1"></div>
+      <div class="p2" id="p2_paddle" [ngStyle]="paddle_2"></div>
+      <div class="ball" [ngStyle]="ballMovement"></div>
+    </div>
+  </div>
+</div>

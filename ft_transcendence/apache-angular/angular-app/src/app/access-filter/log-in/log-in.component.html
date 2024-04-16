@@ -1,0 +1,34 @@
+<div class="centralLarge">
+  <div class="card">
+    <h1>{{ loginform }}</h1>
+    <form
+      [formGroup]="loginForm"
+      (keydown.enter)="$event.preventDefault(); onLogin()"
+    >
+      <div class="error" *ngIf="loginError">{{ emailPasswordError }}</div>
+      <div class="error" *ngIf="serverError">{{ serverErrorText }}</div>
+      <div class="error" *ngIf="serverMsg">{{ serverMsgText + errorMsg }}</div>
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="text"
+        formControlName="email"
+        [placeholder]="insertEmail"
+      />
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [placeholder]="insertPassword"
+      />
+    </form>
+    <button class="logbutton" type="submit" (click)="onLogin()">
+      <img src="../../../assets/icons/login.png" alt="" />
+      {{ login }}
+    </button>
+    <button (click)="clickBack()">
+      <img src="../../../assets/icons/back-arrow.png" alt="" /> {{ back }}
+    </button>
+  </div>
+</div>

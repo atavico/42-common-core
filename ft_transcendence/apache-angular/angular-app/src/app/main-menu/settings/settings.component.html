@@ -1,0 +1,88 @@
+<div class="centralLarge">
+  <div class="card">
+    <h3>{{ settings }}</h3>
+    <div class="row">
+      <div class="col6">
+        <div class="error" *ngIf="serverError">{{ serverErrorText }}</div>
+        <div class="error" *ngIf="errorFormat">{{ imgErrorFormat }}</div>
+        <div class="error" *ngIf="errorSize">{{ imgErrorSize }}</div>
+        <p>{{ profilePicture }}</p>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="changeProfilePic($event)"
+        />
+        <div
+          class="picSmall"
+          [ngStyle]="{ 'background-image': 'url(' + profilePic + ')' }"
+          (click)="fileInput.click()"
+        ></div>
+      </div>
+      <div class="col6">
+        <h6>{{ nickname }}</h6>
+        <p [ngClass]="{ error: nickNameError }">
+          {{ nickNameErrorMsg1 }} {{ nickNameErrorMsg2 }}
+        </p>
+        <form [formGroup]="settingForm">
+          <input
+            id="nickNew"
+            type="text"
+            formControlName="nickNew"
+            [placeholder]="nickPlaceholder"
+          />
+        </form>
+      </div>
+      <div class="divider"></div>
+      <p>
+        {{ currentLanguageMsg }} : {{ language }} | {{ changingTo }} -
+        {{ newlanguage }}
+      </p>
+    </div>
+    <div class="row">
+      <div class="col4">
+        <button
+          [ngClass]="{ selected: newlanguage === 'en' }"
+          (click)="changeLanguage('en')"
+        >
+          EN
+        </button>
+      </div>
+      <div class="col4">
+        <button
+          [ngClass]="{ selected: newlanguage === 'it' }"
+          (click)="changeLanguage('it')"
+        >
+          IT
+        </button>
+      </div>
+      <div class="col4">
+        <button
+          [ngClass]="{ selected: newlanguage === 'pl' }"
+          (click)="changeLanguage('pl')"
+        >
+          PL
+        </button>
+      </div>
+      <button class="success" (click)="saveSettings()">
+        <img src="../../../assets/icons/save.png" alt="" /> {{ save }}
+      </button>
+      <button class="danger" (click)="deleteAccount()">
+        <img src="../../../assets/icons/remove-user.png" alt="" />
+        {{ deleteAccountStr }}
+      </button>
+      <p *ngIf="deletePrompt">{{ deleteAccountQuestion }}</p>
+      <input
+        *ngIf="deletePrompt"
+        type="text"
+        [(ngModel)]="deleteConfirmation"
+      />
+      <button *ngIf="deletePrompt" (click)="confirmDelete()">
+        {{ confirm }}
+      </button>
+      <button class="warning" (click)="closeSettings()">
+        <img src="../../../assets/icons/back-arrow.png" alt="" /> {{ back }}
+      </button>
+    </div>
+  </div>
+</div>

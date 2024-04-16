@@ -1,0 +1,27 @@
+bin/elasticsearch-create-enrollment-token --scope kibana
+
+#bin/elasticsearch-setup-passwords auto -u elastic
+bin/elasticsearch-setup-passwords auto -u https://localhost:9200 -b
+
+
+
+Changed password for user apm_system
+PASSWORD apm_system = mu3FmiGvclYDPshz6Qqo
+
+Changed password for user kibana_system
+PASSWORD kibana_system = soTCUzfEqdN3MwiXqWsf
+
+Changed password for user kibana
+PASSWORD kibana = soTCUzfEqdN3MwiXqWsf
+
+Changed password for user logstash_system
+PASSWORD logstash_system = Sc25aTrBvpEyARxb0AEu
+
+Changed password for user beats_system
+PASSWORD beats_system = bMBkD4YaWFN0IsU09dOY
+
+Changed password for user remote_monitoring_user
+PASSWORD remote_monitoring_user = vIllIch9tHjdVHHk7vHM
+
+Changed password for user elastic
+PASSWORD elastic = Bzh6tfOQoICHsOIWIeC2
